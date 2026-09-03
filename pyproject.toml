@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "microscope-control"
+version = "0.1.0"
+description = "Control software for an Olympus BH3 rig with a tethered Canon EOS 5D Mark IV"
+requires-python = ">=3.11"
+dependencies = [
+    "PySide6>=6.6",
+    "numpy>=1.26",
+    # PyPI name `gphoto2` is Jim Easterbrook's python-gphoto2 binding.
+    # nixpkgs calls it python3Packages.gphoto2; same project.
+    "gphoto2>=2.5",
+]
+
+[project.scripts]
+microscope-control = "microscope_control.app:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/microscope_control"]
