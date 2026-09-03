@@ -91,6 +91,19 @@ def main() -> int:
     app = QApplication(sys.argv)
     app.setApplicationName("MicroscopeControl")
     app.setOrganizationName("MicroscopeControl")
+    # Ties the window to its desktop entry. On Wayland this becomes the
+    # xdg-shell app_id, which is how the compositor finds the .desktop file --
+    # and therefore the launcher icon, and the grouping of windows belonging to
+    # this application.
+    #
+    # Without it Qt derives the app_id from argv[0], which for a Python app
+    # installed by buildPythonApplication is "python3": generic enough to
+    # collide with every other Qt/Python program and to match no desktop entry
+    # at all, so the window shows a fallback icon.
+    #
+    # No .desktop suffix -- Qt strips one if given, but the documented form is
+    # the base name.
+    app.setDesktopFileName("microscope-control")
     _apply_dark_palette(app)
     _apply_touch_metrics(app)
 
